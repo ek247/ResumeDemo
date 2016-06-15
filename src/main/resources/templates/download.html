@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
+
+
+
+    <!-- Custom CSS -->
+    <link href="/css/resume.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+</head>
+</bod>
+    <p>If you're done with your resume:</p>
+    <div class="form">
+    <form th:action="@{downloaded.html}" method="post" >
+        <div style="text-align:center;">
+        <input type="submit" value="Download">
+            </div>
+    </form>
+    </div>
+    <br>
+    <p>If you want to edit your resume some more:</p>
+    <div class="form">
+    <form th:action="@{resume.html}" method="get">
+        <div style="text-align:center;">
+        <input type="submit" value="Edit">
+            </div>
+    </form>
+    </div>
+</body>
+</html>

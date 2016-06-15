@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+
+    <!-- Custom CSS -->
+    <link href="/css/resume.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <title>Resume Creation</title>
+</head>
+<body>
+
+<script th:inline="javascript">
+    /**
+     * Created by worri on 6/9/2016.
+     */
+    $(document).ready(function() {
+        $("body").hide();
+
+        var numItems = [[${size}]];
+
+        for(i = 1; i < numItems; i++)
+        {
+            $('#hide'+i).hide();
+        }
+        $('#maxFields').hide();
+
+
+        $("body").fadeIn(1000);
+
+        //Unhide fields as you press the button
+        var numShowing = 1;
+
+        $('#add-button').click(function()
+        {
+            if(numShowing < numItems)
+            {
+                $('#hide'+numShowing).fadeIn(500);
+                numShowing++;
+            }
+            else
+            {
+                $('#maxFields').show();
+                $('#maxFields').get(0).scrollIntoView({block: "end", behavior: "smooth"});
+                $('#maxFields').fadeOut(5000);
+            }
+        });
+
+
+        $('inputsubmit')
+    });
+</script>
+
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="text-center">
+                    <span class="name" th:text="${formName}">Input Information</span>
+                    <div class="script-container">
+                        <form th:action="@{/__${givenPath}__}" th:object="${genericdata}" method="post" >
+                            <div class="field" th:each="i: ${#numbers.sequence(0, fieldsList.size()-1)}">
+                                <div th:id="'hide'+${i}">
+                                    <hr class="star-light">
+                                    <fieldset th:each="field : ${fieldsList.get(i)}">
+                                <p th:text="${field.desc}"></p>
+                                <div th:if="${field.type != 'textarea'}">
+                                <input type="" size="" value="" th:type="${field.type}" th:value="${field.value}" th:size="${field.size}" th:id="${field.name}" th:name="${field.name}" th:field="*{$field.name}"/>
+                                </div>
+                                <div th:if="${field.type == 'textarea'}">
+                                    <TEXTAREA name="" COLS=40 ROWS=8 th:attr="id=${field.name}, name=${field.name}" th:text="${field.value}"></TEXTAREA>
+                                </div>
+                            </fieldset>
+                            <br>
+                            </div>
+                            </div>
+                            <input type="submit" value="Submit" id="Submit">
+                            <div id="add-button" th:if="${fieldsList.size() > 1}">
+                                <div id="vert-cross"></div>
+                                <div id="horiz-cross"></div>
+                            </div>
+                            <div id="maxFields"><p>You're already at the maximum number of fields!</p></div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+</body>
+</html>
